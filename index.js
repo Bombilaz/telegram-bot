@@ -7,12 +7,13 @@ const bot = new Telegraf('5884638429:AAHymsAxkSFQKfNSQsBdkCXbcxj_QijoixM');
 
 // Обработчик сообщений в чате
 bot.on('text', async (ctx) => {
-    const messageText = ctx.message.text.toLowerCase();
+    const messageText = ctx.message.text;
 
     // Проверяем наличие слова "гей" в сообщении
-    if (messageText.includes('пердикс кто гей')) {
+    if (messageText.toLowerCase().includes('пердикс кто ')) {
         const chatId = ctx.chat.id;
-
+        const answer = messageText.replace('пердикс кто', '');
+        console.log(answer);
         // Получаем список участников чата
         const chatMembers = await ctx.getChatMembersCount();
         const chatMembersList = await ctx.getChatAdministrators(chatId);
@@ -25,7 +26,7 @@ bot.on('text', async (ctx) => {
         const userLastName = randomMember.user.last_name ? randomMember.user.last_name : '';
 
         // Отправляем ответное сообщение
-        ctx.reply(`${userFirstName} ${userLastName} гей!`);
+        ctx.reply(`${userFirstName} ${userLastName}${answer}`);
     }
 });
 
